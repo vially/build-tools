@@ -91,7 +91,7 @@ function depotSpawnSync(config, cmd, args, opts_in) {
 }
 
 function depotExecFileSync(config, exec, args, opts_in) {
-  if (exec === 'python' && !path.isAbsolute(args[0])) {
+  if ((exec === 'python' || exec === 'python2') && !path.isAbsolute(args[0])) {
     args[0] = path.resolve(DEPOT_TOOLS_DIR, args[0]);
   }
   const opts = depotOpts(config, opts_in);

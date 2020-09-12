@@ -17,7 +17,7 @@ function runGNGen(config) {
   const gn_args = config.gen.args.join(' ').replace(/\"/g, '\\"'); // gn parses this part -- inner quotes must be escaped
   const exec = `${path.resolve(depot.path, gnExec)} gen "out/${
     config.gen.out
-  }" --args="${gn_args}"`;
+  }" --args="${gn_args}" --script-executable=/usr/bin/python2`;
   const opts = { cwd: path.resolve(config.root, 'src') };
   depot.execSync(config, exec, opts);
 }
@@ -43,7 +43,7 @@ function runNinja(config, target, ninjaArgs) {
         console.log('Not Authenticated - Triggering Goma Login');
         const { status, error } = depot.spawnSync(
           evmConfig.current(),
-          'python',
+          'python2',
           ['goma_auth.py', 'login'],
           {
             cwd: goma.dir,
