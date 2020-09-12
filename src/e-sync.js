@@ -41,7 +41,7 @@ function runGClientSync(config, syncArgs, syncOpts) {
 
   depot.ensure();
 
-  const exec = 'python';
+  const exec = 'python2';
   const args = ['gclient.py', 'sync', '--with_branch_heads', '--with_tags', '-vv', ...syncArgs];
   const opts = {
     cwd: srcdir,

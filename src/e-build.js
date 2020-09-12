@@ -15,7 +15,7 @@ function runGNGen(config) {
   const gnBasename = os.platform() === 'win32' ? 'gn.bat' : 'gn';
   const gnPath = path.resolve(depot.path, gnBasename);
   const gnArgs = config.gen.args.join(' ');
-  const execArgs = ['gen', `out/${config.gen.out}`, `--args=${gnArgs}`];
+  const execArgs = ['gen', `out/${config.gen.out}`, `--args=${gnArgs}`, '--script-executable=/usr/bin/python2'];
   const execOpts = { cwd: path.resolve(config.root, 'src') };
   depot.execFileSync(config, gnPath, execArgs, execOpts);
 }
@@ -41,7 +41,7 @@ function runNinja(config, target, useGoma, ninjaArgs) {
         console.log('Not Authenticated - Triggering Goma Login');
         const { status, error } = depot.spawnSync(
           evmConfig.current(),
-          'python',
+          'python2',
           ['goma_auth.py', 'login'],
           {
             cwd: goma.dir,

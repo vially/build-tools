@@ -44,7 +44,7 @@ function downloadAndPrepareGoma(config) {
   }[process.platform];
 
   if (fs.existsSync(path.resolve(gomaDir, 'goma_ctl.py'))) {
-    depot.spawnSync(config, 'python', ['goma_ctl.py', 'stop'], {
+    depot.spawnSync(config, 'python2', ['goma_ctl.py', 'stop'], {
       cwd: gomaDir,
       stdio: ['ignore'],
     });
@@ -102,7 +102,7 @@ function gomaIsAuthenticated() {
 
   let loggedInInfo;
   try {
-    loggedInInfo = childProcess.execFileSync('python', ['goma_auth.py', 'info'], {
+    loggedInInfo = childProcess.execFileSync('python2', ['goma_auth.py', 'info'], {
       cwd: gomaDir,
       stdio: ['ignore'],
     });
@@ -121,7 +121,7 @@ function authenticateGoma(config) {
 
   if (!gomaIsAuthenticated()) {
     console.log(color.childExec('goma_auth.py', ['login'], { cwd: gomaDir }));
-    childProcess.execFileSync('python', ['goma_auth.py', 'login'], {
+    childProcess.execFileSync('python2', ['goma_auth.py', 'login'], {
       cwd: gomaDir,
       stdio: 'inherit',
     });
@@ -146,7 +146,7 @@ function ensureGomaStart(config) {
   if (status === 0) return;
 
   console.log(color.childExec('goma_ctl.py', ['ensure_start'], { cwd: gomaDir }));
-  childProcess.execFileSync('python', ['goma_ctl.py', 'ensure_start'], {
+  childProcess.execFileSync('python2', ['goma_ctl.py', 'ensure_start'], {
     cwd: gomaDir,
     env: {
       ...process.env,
